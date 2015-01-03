@@ -1,5 +1,4 @@
 package com.example.ambika.dailybloodsugarcalc;
-
 import android.app.Activity;
 import android.util.Log;
 
@@ -11,18 +10,17 @@ import com.google.gdata.data.spreadsheet.ListEntry;
 import com.google.gdata.data.spreadsheet.ListFeed;
 import com.google.gdata.data.spreadsheet.WorksheetEntry;
 import com.google.gdata.data.spreadsheet.WorksheetFeed;
-
 import java.net.URL;
 import java.util.*;
 import java.util.List;
 
-//read google docs FoodDB and create hashtable<string, int> with food names and glycemic index values
-public class FoodDB {
+//read google docs ExerciseDB and create hashtable<string, int> with exercise names and exercise index values
+public class ExerciseDB {
 
-    public static HashMap<String, Integer> foodEntries = new HashMap<String, Integer>();
-    public static ArrayList<String> listoffoods = new ArrayList<String>();
+    public static HashMap<String, Integer> exerciseEntries = new HashMap<String, Integer>();
+    public static ArrayList<String> listofexercises = new ArrayList<String>();
 
-//------------------------ METHOD TO ACCESS GOOGLE DOC DIRECTLY ---------------------------------
+    //------------------------ METHOD TO ACCESS GOOGLE DOC DIRECTLY ---------------------------------
     public static void main(String[] args) {
 
         String applicationName = "com.example.ambika.dailybloodsugarcalc";
@@ -42,13 +40,13 @@ public class FoodDB {
             int numEntries = 0;
 
             for (ListEntry row : list) {
-                    String foodInput = row.getPlainTextContent();
-                    FoodDB.listoffoods.add(numEntries, foodInput.substring("name: ".length(), foodInput.indexOf(", " +
-                            "glycemicindex: ")));
-                    FoodDB.foodEntries.put(foodInput.substring("name: ".length(), foodInput.indexOf(", glycemicindex: ")),
-                            Integer.parseInt(foodInput.substring(foodInput.indexOf(", glycemicindex: ") + (", glycemicindex: " +
-                                    "").length())));
-                    numEntries++;
+                String exerciseInput = row.getPlainTextContent();
+                ExerciseDB.listofexercises.add(numEntries, exerciseInput.substring("exercise: ".length(), exerciseInput.indexOf(", " +
+                        "exerciseindex: ")));
+                ExerciseDB.exerciseEntries.put(exerciseInput.substring("exercise: ".length(), exerciseInput.indexOf(", exerciseindex: ")),
+                        Integer.parseInt(exerciseInput.substring(exerciseInput.indexOf(", exerciseindex: ") + (", exerciseindex: " +
+                                "").length())));
+                numEntries++;
             }
         } catch (Exception e) {
             e.printStackTrace();

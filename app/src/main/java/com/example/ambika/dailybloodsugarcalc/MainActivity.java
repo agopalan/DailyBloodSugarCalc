@@ -1,7 +1,9 @@
 package com.example.ambika.dailybloodsugarcalc;
 
+import android.os.StrictMode;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
@@ -19,21 +21,15 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        StrictMode.enableDefaults();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//----------------METHOD TO ACCESS FROM DOWNLOADED CSV FILE ---------------------
-//        InputStream inputStream = getResources().openRawResource(R.raw.fooddb);
-//        ReadCSVFile csvFile = new ReadCSVFile(inputStream);
-//        List foodData = csvFile.read();
-//        FoodDB.buildDB(foodData);
-//-------------------------------------------------------------------------------
-
-
         //-------METHOD TO ACCESS STRAIGHT FROM GOOGLE DOCS ---------------
-        String args[] = {"1XBl8AvLRoycm034Rh-lMoe_pGHnY14DCtZToBnz4v-w"};
-        FoodDB.main(args);
-        //-----------------------------------------------------------------
+        String foodOnlineDB[] = {"1XBl8AvLRoycm034Rh-lMoe_pGHnY14DCtZToBnz4v-w"};
+        FoodDB.main(foodOnlineDB);
+        String exerciseOnlineDB[] = {"16Zz2hk6fD0LvbdeODpr_02s5hVclpvbZtkOt4-T_FEM"};
+        ExerciseDB.main(exerciseOnlineDB);
 
         setViews();
 
@@ -49,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
 
     public void setViews(){
         exerciseAdapter = new ArrayAdapter<String>
-                (this,android.R.layout.select_dialog_item, FoodDB.listoffoods);
+                (this,android.R.layout.select_dialog_item, ExerciseDB.listofexercises);
         foodAdapter = new ArrayAdapter<String>
                 (this,android.R.layout.select_dialog_item, FoodDB.listoffoods);
     }
