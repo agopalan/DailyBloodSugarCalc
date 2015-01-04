@@ -17,7 +17,11 @@ import java.util.Date;
 public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
+        //clear data points on graph
+
         //reset all values at midnight
+//        UpdateGraph.slope = 0;
+//        UpdateGraph.prev_x = 0;
         Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
     }
 
