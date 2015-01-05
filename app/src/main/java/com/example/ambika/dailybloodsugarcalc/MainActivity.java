@@ -20,16 +20,24 @@ import android.widget.Toast;
 import com.jjoe64.graphview.GraphView;
 
 import java.util.Calendar;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 
 public class MainActivity extends ActionBarActivity {
 
-    final int NUM_CHAR = 2;
-    final int INITIAL_BLOOD_SUGAR = 80;
-    public static int currBloodSugar;
+    //constants
+    final int NUM_CHAR_INPUT = 2;
+    final static int INITIAL_BLOOD_SUGAR = 80;
+    final static int INITIAL_GLYCATION = 0;
+    final static long MINUTE_TIMER_INTERVAL = 60000;
+    final static long MINUTE_TIMER_TOTAL = 86400000;
+
+    private static CountDownTimer minuteTimer;
     private PendingIntent pendingIntent;
 
+    //UI
     ArrayAdapter<String> exerciseAdapter;
     ArrayAdapter<String> foodAdapter;
     Button exerciseButton;
@@ -53,34 +61,63 @@ public class MainActivity extends ActionBarActivity {
         String databaseKeys[] = {"1XBl8AvLRoycm034Rh-lMoe_pGHnY14DCtZToBnz4v-w",
                 "16Zz2hk6fD0LvbdeODpr_02s5hVclpvbZtkOt4-T_FEM"};
         BuildDB.main(databaseKeys);
+        //-----------------------------------------------------------------
 
+        //set up initial UI
         setViews();
+
+        //initialize graph values
+        UpdateGraph.initializeGraph();
+
+        //set up timer for every 1 min
+        minuteTimer = new CountDownTimer(MINUTE_TIMER_TOTAL, MINUTE_TIMER_INTERVAL) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                //call updategraph for every 1 min
+                    UpdateGraph.updateGraph();
+                    if(UpdateGraph.newBloodSugar <= 25){
+                       Toast.makeText(MainActivity.this, "DANGER! BLOOD SUGAR TOO LOW", Toast.LENGTH_SHORT).show();
+                    }
+                    if(UpdateGraph.newBloodSugar >= 200 ){
+                    Toast.makeText(MainActivity.this, "DANGER! BLOOD SUGAR TOO HIGH", Toast.LENGTH_SHORT).show();
+                    }
+            }
+
+            @Override
+            public void onFinish() {
+                //start timer again
+                minuteTimer.start();
+            }
+        }.start();
 
         //exercise search box
         final AutoCompleteTextView autoTV1= (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView1);
-        autoTV1.setThreshold(NUM_CHAR);
+        autoTV1.setThreshold(NUM_CHAR_INPUT);
         autoTV1.setAdapter(exerciseAdapter);
 
         //food search box
         final AutoCompleteTextView autoTV2= (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView2);
-        autoTV2.setThreshold(NUM_CHAR);
+        autoTV2.setThreshold(NUM_CHAR_INPUT);
         autoTV2.setAdapter(foodAdapter);
 
+        //call updateGraphWithIndex
         //"submit" button is clicked for exercise input
         exerciseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UpdateGraph.updateSlope(BuildDB.exerciseEntries.get(autoTV1.getText().toString()), "exercise");
+                //update graph with passed in index
+                UpdateGraph.updateGraphWithIndex(BuildDB.exerciseEntries.get(autoTV1.getText().toString()), "exercise");
                 autoTV1.setText("");
-
             }
         });
 
+        //call updateGraphWithIndex
         //"submit" button is clicked for food input
         foodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UpdateGraph.updateSlope(BuildDB.foodEntries.get(autoTV2.getText().toString()), "food");
+                //update graph with passed in index
+                UpdateGraph.updateGraphWithIndex(BuildDB.foodEntries.get(autoTV2.getText().toString()), "food");
                 autoTV2.setText("");
             }
         });
@@ -95,7 +132,7 @@ public class MainActivity extends ActionBarActivity {
         });
     }
 
-    //set up initial views and values
+    //set up initial views
     public void setViews(){
         //exercise search box
         exerciseAdapter = new ArrayAdapter<String>
@@ -109,8 +146,6 @@ public class MainActivity extends ActionBarActivity {
         foodButton = (Button) findViewById(R.id.foodButton);
         //view graph button
         graphButton = (Button) findViewById(R.id.graphButton);
-        //initial value of blood sugar
-        currBloodSugar = INITIAL_BLOOD_SUGAR;
     }
 
     //start alarm to go off at midnight
