@@ -24,12 +24,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         //clear data points on graph, reset values at midnight
         UpdateGraph.slope = 0;
-
-        //resets all data in series
-        DataPoint[] data = new DataPoint[] {new DataPoint (
-                TimeUnit.MILLISECONDS.toHours(System.currentTimeMillis()),
-                MainActivity.INITIAL_BLOOD_SUGAR)};
-        UpdateGraph.series_bloodsugar.resetData(data);
+        UpdateGraph.series_bloodsugar.clear();
 
         //clear out timer, modifier data structure
         UpdateGraph.timer_counter = 0;

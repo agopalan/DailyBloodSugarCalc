@@ -31,8 +31,10 @@ public class MainActivity extends ActionBarActivity {
     final int NUM_CHAR_INPUT = 2;
     final static int INITIAL_BLOOD_SUGAR = 80;
     final static int INITIAL_GLYCATION = 0;
-    final static long MINUTE_TIMER_INTERVAL = 60000;
+    final static long TENSEC_TIMER_INTERVAL = 10000;
     final static long MINUTE_TIMER_TOTAL = 86400000;
+    final static int LOW_BLOOD_SUGAR = 25;
+    final static int HIGH_BLOOD_SUGAR = 150;
 
     private static CountDownTimer minuteTimer;
     private PendingIntent pendingIntent;
@@ -51,11 +53,11 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         //intent resets values every midnight
-        Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
+//        Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
+//        pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
 
         //start alarm to go off every midnight and reset values
-        start();
+        //start();
 
         //-------METHOD TO ACCESS STRAIGHT FROM GOOGLE DOCS ---------------
         String databaseKeys[] = {"1XBl8AvLRoycm034Rh-lMoe_pGHnY14DCtZToBnz4v-w",
@@ -70,25 +72,25 @@ public class MainActivity extends ActionBarActivity {
         UpdateGraph.initializeGraph();
 
         //set up timer for every 1 min
-        minuteTimer = new CountDownTimer(MINUTE_TIMER_TOTAL, MINUTE_TIMER_INTERVAL) {
-            @Override
-            public void onTick(long millisUntilFinished) {
-                //call updategraph for every 1 min
-                    UpdateGraph.updateGraph();
-                    if(UpdateGraph.newBloodSugar <= 25){
-                       Toast.makeText(MainActivity.this, "DANGER! BLOOD SUGAR TOO LOW", Toast.LENGTH_SHORT).show();
-                    }
-                    if(UpdateGraph.newBloodSugar >= 200 ){
-                    Toast.makeText(MainActivity.this, "DANGER! BLOOD SUGAR TOO HIGH", Toast.LENGTH_SHORT).show();
-                    }
-            }
-
-            @Override
-            public void onFinish() {
-                //start timer again
-                minuteTimer.start();
-            }
-        }.start();
+//        minuteTimer = new CountDownTimer(MINUTE_TIMER_TOTAL, TENSEC_TIMER_INTERVAL) {
+//            @Override
+//            public void onTick(long millisUntilFinished) {
+//                //call updategraph for every 1 min
+//                    UpdateGraph.updateGraph();
+//                    if(UpdateGraph.newBloodSugar <= LOW_BLOOD_SUGAR){
+//                       Toast.makeText(MainActivity.this, "DANGER! BLOOD SUGAR TOO LOW", Toast.LENGTH_SHORT).show();
+//                    }
+//                    if(UpdateGraph.newBloodSugar >= HIGH_BLOOD_SUGAR ){
+//                    Toast.makeText(MainActivity.this, "DANGER! BLOOD SUGAR TOO HIGH", Toast.LENGTH_SHORT).show();
+//                    }
+//            }
+//
+//            @Override
+//            public void onFinish() {
+//                //start timer again
+//                minuteTimer.start();
+//            }
+//        }.start();
 
         //exercise search box
         final AutoCompleteTextView autoTV1= (AutoCompleteTextView)findViewById(R.id.autoCompleteTextView1);
@@ -148,21 +150,37 @@ public class MainActivity extends ActionBarActivity {
         graphButton = (Button) findViewById(R.id.graphButton);
     }
 
-    //start alarm to go off at midnight
-    public void start() {
-        //alarm manager to set alarm
-        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+    public void checkBloodSugarLimit(){
 
-        //create a calendar for midnight
-        Calendar todayMidnight = Calendar.getInstance();
-        todayMidnight.add(Calendar.DATE, 1);
-        todayMidnight.set(Calendar.HOUR_OF_DAY, 0);
-        todayMidnight.set(Calendar.MINUTE, 0);
-        todayMidnight.set(Calendar.SECOND, 0);
+        if(UpdateGraph.newBloodSugar <= LOW_BLOOD_SUGAR){
+            Toast.makeText(MainActivity.this, "DANGER! BLOOD SUGAR TOO LOW", Toast.LENGTH_SHORT).show();
+        }
+        if(UpdateGraph.newBloodSugar >= HIGH_BLOOD_SUGAR ){
+            Toast.makeText(MainActivity.this, "DANGER! BLOOD SUGAR TOO HIGH", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-        //set repeating alarm for midnight every night
-        manager.setRepeating(AlarmManager.RTC_WAKEUP, todayMidnight.getTimeInMillis(),
-                TimeUnit.DAYS.toMillis(1), pendingIntent);
+//    //start alarm to go off at midnight
+//    public void start() {
+//        //alarm manager to set alarm
+//        AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+//
+//        //create a calendar for midnight
+//        Calendar todayMidnight = Calendar.getInstance();
+//        todayMidnight.add(Calendar.DATE, 1);
+//        todayMidnight.set(Calendar.HOUR_OF_DAY, 0);
+//        todayMidnight.set(Calendar.MINUTE, 0);
+//        todayMidnight.set(Calendar.SECOND, 0);
+//
+//        //set repeating alarm for midnight every night
+//        manager.setRepeating(AlarmManager.RTC_WAKEUP, todayMidnight.getTimeInMillis(),
+//                TimeUnit.DAYS.toMillis(1), pendingIntent);
+//    }
+
+    @Override
+    public void onBackPressed()
+    {
+        finish();
     }
 
     @Override
