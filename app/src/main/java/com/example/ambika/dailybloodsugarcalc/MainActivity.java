@@ -108,8 +108,13 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 //update graph with passed in index
-                UpdateGraph.updateGraphWithIndex(BuildDB.exerciseEntries.get(autoTV1.getText().toString()), "exercise");
-                autoTV1.setText("");
+                if(autoTV1.getText().toString() == ""){
+                    autoTV1.setText("");
+                }
+                else {
+                    UpdateGraph.updateGraphWithIndex(BuildDB.exerciseEntries.get(autoTV1.getText().toString()), "exercise");
+                    autoTV1.setText("");
+                }
             }
         });
 
@@ -119,8 +124,13 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 //update graph with passed in index
-                UpdateGraph.updateGraphWithIndex(BuildDB.foodEntries.get(autoTV2.getText().toString()), "food");
-                autoTV2.setText("");
+                if(autoTV2.getText().toString() == ""){
+                    autoTV2.setText("");
+                }
+                else {
+                    UpdateGraph.updateGraphWithIndex(BuildDB.foodEntries.get(autoTV2.getText().toString()), "food");
+                    autoTV2.setText("");
+                }
             }
         });
 

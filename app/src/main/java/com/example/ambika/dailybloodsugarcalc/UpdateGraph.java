@@ -50,6 +50,12 @@ public class UpdateGraph {
                         (float)UpdateGraph.now.get(Calendar.MINUTE)/INCREMENT),
                 MainActivity.INITIAL_BLOOD_SUGAR);
 
+        Log.d("firstbsxactual", "" + (float)((UpdateGraph.now.get(Calendar.HOUR_OF_DAY))+
+                (float)UpdateGraph.now.get(Calendar.MINUTE)/INCREMENT));
+        Log.d("firstbsx", "" + UpdateGraph.series_bloodsugar.getX(0));
+        Log.d("firstbsyactual", "" + MainActivity.INITIAL_BLOOD_SUGAR);
+        Log.d("firstbsy", "" + UpdateGraph.series_bloodsugar.getY(0));
+
         UpdateGraph.x_values.add(System.currentTimeMillis());
 
         //set up glycation graph
@@ -64,12 +70,19 @@ public class UpdateGraph {
         //save new y
 
         UpdateGraph.newBloodSugar=((UpdateGraph.slope/ONE_HOUR) * (System.currentTimeMillis()-
-                (float)UpdateGraph.x_values.get(counter)))+
+                (float)UpdateGraph.x_values.get(UpdateGraph.counter)))+
             UpdateGraph.currBloodSugar;
+
+        Log.d("bs", "" + ((UpdateGraph.slope/ONE_HOUR) * (System.currentTimeMillis()-
+                (float)UpdateGraph.x_values.get(UpdateGraph.counter)))+
+                UpdateGraph.currBloodSugar);
+        Log.d("computation", "" + ((System.currentTimeMillis()-
+                (float)UpdateGraph.x_values.get(UpdateGraph.counter))));
+
 
         UpdateGraph.x_values.add(System.currentTimeMillis());
 
-        counter++;
+        UpdateGraph.counter++;
 
         //compare to 150
         //if greater or equal to - add one to new y value and add to series
@@ -78,15 +91,23 @@ public class UpdateGraph {
             UpdateGraph.glycation = UpdateGraph.glycation++;
         }
 
-        //add glycation value to series
-        UpdateGraph.series_glycation.add((float)((UpdateGraph.now.get(Calendar.HOUR_OF_DAY))+
-                        (float)UpdateGraph.now.get(Calendar.MINUTE)/INCREMENT),
-                UpdateGraph.glycation);
-
         //add (current time in hours, current y value) to series
         UpdateGraph.series_bloodsugar.add((float)((UpdateGraph.now.get(Calendar.HOUR_OF_DAY))+
                         (float)UpdateGraph.now.get(Calendar.MINUTE)/INCREMENT),
                 UpdateGraph.newBloodSugar);
+
+        Log.d("bsxactual", "" + (float)((UpdateGraph.now.get(Calendar.HOUR_OF_DAY))+
+                (float)UpdateGraph.now.get(Calendar.MINUTE)/INCREMENT));
+        Log.d("bsx", "" + UpdateGraph.series_bloodsugar.getX(UpdateGraph.counter));
+        Log.d("yactual", "" + UpdateGraph.newBloodSugar);
+        Log.d("bsy", "" + UpdateGraph.series_bloodsugar.getY(UpdateGraph.counter));
+        Log.d("slope", "" + UpdateGraph.slope);
+
+
+        //add glycation value to series
+        UpdateGraph.series_glycation.add((float)((UpdateGraph.now.get(Calendar.HOUR_OF_DAY))+
+                        (float)UpdateGraph.now.get(Calendar.MINUTE)/INCREMENT),
+                UpdateGraph.glycation);
 
         //update current blood sugar value
         UpdateGraph.currBloodSugar = UpdateGraph.newBloodSugar;
