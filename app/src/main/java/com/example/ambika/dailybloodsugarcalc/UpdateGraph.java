@@ -50,12 +50,6 @@ public class UpdateGraph {
                         (float)UpdateGraph.now.get(Calendar.MINUTE)/INCREMENT),
                 MainActivity.INITIAL_BLOOD_SUGAR);
 
-        Log.d("firstbsxactual", "" + (float)((UpdateGraph.now.get(Calendar.HOUR_OF_DAY))+
-                (float)UpdateGraph.now.get(Calendar.MINUTE)/INCREMENT));
-        Log.d("firstbsx", "" + UpdateGraph.series_bloodsugar.getX(0));
-        Log.d("firstbsyactual", "" + MainActivity.INITIAL_BLOOD_SUGAR);
-        Log.d("firstbsy", "" + UpdateGraph.series_bloodsugar.getY(0));
-
         UpdateGraph.x_values.add(System.currentTimeMillis());
 
         //set up glycation graph
@@ -95,13 +89,6 @@ public class UpdateGraph {
         UpdateGraph.series_bloodsugar.add((float)((UpdateGraph.now.get(Calendar.HOUR_OF_DAY))+
                         (float)UpdateGraph.now.get(Calendar.MINUTE)/INCREMENT),
                 UpdateGraph.newBloodSugar);
-
-        Log.d("bsxactual", "" + (float)((UpdateGraph.now.get(Calendar.HOUR_OF_DAY))+
-                (float)UpdateGraph.now.get(Calendar.MINUTE)/INCREMENT));
-        Log.d("bsx", "" + UpdateGraph.series_bloodsugar.getX(UpdateGraph.counter));
-        Log.d("yactual", "" + UpdateGraph.newBloodSugar);
-        Log.d("bsy", "" + UpdateGraph.series_bloodsugar.getY(UpdateGraph.counter));
-        Log.d("slope", "" + UpdateGraph.slope);
 
 
         //add glycation value to series

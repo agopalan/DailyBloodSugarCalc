@@ -49,7 +49,6 @@ public class DisplayGraphsActivity extends Activity {
         //blood sugar dataset
         dataset_bloodsugar = new XYMultipleSeriesDataset();
         dataset_bloodsugar.addSeries(UpdateGraph.series_bloodsugar);
-        Log.d("series", "" + UpdateGraph.series_bloodsugar.getItemCount());
 
         //glycation dataset
         dataset_glycation = new XYMultipleSeriesDataset();
@@ -58,8 +57,6 @@ public class DisplayGraphsActivity extends Activity {
         setRenderer();
 
         setMultipleSeriesRenderer();
-
-        //setZoom();
 
         //set up blood sugar graph
         chartViewBS = ChartFactory.getLineChartView(this, dataset_bloodsugar, mRenderer_bloodsugar);
@@ -77,7 +74,7 @@ public class DisplayGraphsActivity extends Activity {
         //set up blood sugar
         renderer_bloodsugar = new XYSeriesRenderer();
         renderer_bloodsugar.setLineWidth(LINE_WIDTH);
-        renderer_bloodsugar.setColor(Color.RED);
+        renderer_bloodsugar.setColor(Color.WHITE);
         renderer_bloodsugar.setDisplayBoundingPoints(true);
         renderer_bloodsugar.setPointStyle(PointStyle.CIRCLE);
         renderer_bloodsugar.setPointStrokeWidth(STROKE_WIDTH);
@@ -87,7 +84,7 @@ public class DisplayGraphsActivity extends Activity {
         //set up glycation
         renderer_glycation = new XYSeriesRenderer();
         renderer_glycation.setLineWidth(LINE_WIDTH);
-        renderer_glycation.setColor(Color.RED);
+        renderer_glycation.setColor(Color.WHITE);
         renderer_glycation.setDisplayBoundingPoints(true);
         renderer_glycation.setPointStyle(PointStyle.CIRCLE);
         renderer_glycation.setPointStrokeWidth(STROKE_WIDTH);
@@ -134,14 +131,4 @@ public class DisplayGraphsActivity extends Activity {
         mRenderer_glycation.setBackgroundColor(Color.BLACK);
     }
 
-//    public void setZoom(){
-//        zoom = new Zoom();
-//
-//    }
-
-    public void addZoomListener(ZoomListener listener,boolean onButtons,boolean onPinch){
-            if (onPinch) {
-                chartViewBS.addZoomListener(listener, false, true);
-            }
-        }
     }

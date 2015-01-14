@@ -44,7 +44,7 @@ public class MainActivity extends ActionBarActivity {
     ArrayAdapter<String> foodAdapter;
     Button exerciseButton;
     Button foodButton;
-    Button graphButton;
+    Button valueButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,11 +134,11 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        //"submit" button is clicked for food input
-        graphButton.setOnClickListener(new View.OnClickListener() {
+        //"submit" button is clicked for viewing values
+        valueButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), DisplayGraphsActivity.class);
+                Intent i = new Intent(getApplicationContext(), DisplayValuesActivity.class);
                 startActivity(i);
             }
         });
@@ -156,8 +156,8 @@ public class MainActivity extends ActionBarActivity {
         exerciseButton = (Button) findViewById(R.id.exerciseButton);
         //food submit button
         foodButton = (Button) findViewById(R.id.foodButton);
-        //view graph button
-        graphButton = (Button) findViewById(R.id.graphButton);
+        //view value button
+        valueButton = (Button) findViewById(R.id.valuesButton);
     }
 
     public void checkBloodSugarLimit(){

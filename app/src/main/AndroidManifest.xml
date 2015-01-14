@@ -23,6 +23,8 @@
         </activity>
         <activity android:name=".DisplayGraphsActivity">
         </activity>
+        <activity android:name=".DisplayValuesActivity">
+        </activity>
         <receiver android:name=".DeviceBootReceiver"
             android:enabled="false">
             <intent-filter>

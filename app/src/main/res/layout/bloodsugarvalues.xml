@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/LinearLayout01"
+android:layout_width="fill_parent" xmlns:android="http://schemas.android.com/apk/res/android"
+android:paddingLeft="10sp" android:paddingRight="10sp"
+android:layout_height="wrap_content"
+android:orientation="vertical" android:paddingTop="2sp">
+
+    <LinearLayout
+        android:id="@+id/LinearLayout02"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent">
+
+        <TextView
+        android:id="@+id/TextView01" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:textStyle="bold"
+        android:text="Time  " android:textSize="13sp">
+        </TextView>
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:text="Time"
+        android:id="@+id/tvTime" android:textSize="13sp">
+        </TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LinearLayout03"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent">
+
+        <TextView
+        android:id="@+id/TextView02" android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:textStyle="bold"
+        android:text="Blood Sugar  " android:textSize="13sp">
+        </TextView>
+
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:text="Blood Sugar"
+        android:id="@+id/tvBS" android:textSize="13sp" android:layout_weight="1">
+        </TextView>
+
+    </LinearLayout>
+
+</LinearLayout>
