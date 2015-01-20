@@ -40,6 +40,7 @@ public class DisplayGraphsActivity extends Activity {
     private XYSeriesRenderer renderer_glycation;
     private XYMultipleSeriesRenderer mRenderer_glycation;
     private GraphicalView chartViewBS;
+    private GraphicalView chartViewG;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +65,7 @@ public class DisplayGraphsActivity extends Activity {
         layout_BS.addView(chartViewBS);
 
         //set up glycation graph
-        GraphicalView chartViewG = ChartFactory.getLineChartView(this, dataset_glycation, mRenderer_glycation);
+        chartViewG = ChartFactory.getLineChartView(this, dataset_glycation, mRenderer_glycation);
         LinearLayout layout_G = (LinearLayout) findViewById(R.id.glycationgraph);
         layout_G.addView(chartViewG);
     }
@@ -111,6 +112,7 @@ public class DisplayGraphsActivity extends Activity {
         mRenderer_bloodsugar.setAxesColor(Color.WHITE);
         mRenderer_bloodsugar.setApplyBackgroundColor(true);
         mRenderer_bloodsugar.setBackgroundColor(Color.BLACK);
+        mRenderer_bloodsugar.setZoomButtonsVisible(true);
 
         //set up glycation
         mRenderer_glycation = new XYMultipleSeriesRenderer();
@@ -129,6 +131,7 @@ public class DisplayGraphsActivity extends Activity {
         mRenderer_glycation.setAxesColor(Color.WHITE);
         mRenderer_glycation.setApplyBackgroundColor(true);
         mRenderer_glycation.setBackgroundColor(Color.BLACK);
+        mRenderer_glycation.setZoomButtonsVisible(true);
     }
 
     }

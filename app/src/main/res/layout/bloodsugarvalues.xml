@@ -43,4 +43,23 @@ android:orientation="vertical" android:paddingTop="2sp">
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/LinearLayout04"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent">
+
+        <TextView
+            android:id="@+id/TextView03" android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:textStyle="bold"
+            android:text="Glycation  " android:textSize="13sp">
+        </TextView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:text="Glycation"
+            android:id="@+id/tvG" android:textSize="13sp" android:layout_weight="1">
+        </TextView>
+
+    </LinearLayout>
+
 </LinearLayout>
